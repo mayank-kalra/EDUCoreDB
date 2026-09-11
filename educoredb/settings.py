@@ -14,6 +14,8 @@ import pymysql
 pymysql.install_as_MySQLdb()
 
 import os
+from dotenv import load_dotenv
+load_dotenv()
 import dj_database_url
 #from decouple import config
 
