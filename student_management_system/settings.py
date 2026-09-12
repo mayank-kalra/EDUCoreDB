@@ -35,8 +35,7 @@ MEDIA_ROOT=os.path.join(BASE_DIR,"media")
 
 STATIC_URL="/static/"
 STATIC_ROOT=os.path.join(BASE_DIR,"static")
-STATICFILES_STORAGE='whitenoise.storage.CompressedManifestStaticFilesStorage'
-
+STATICFILES_STORAGE='whitenoise.storage.CompressedStaticFilesStorage'
 # Application definition
 
 INSTALLED_APPS = [
@@ -87,13 +86,19 @@ WSGI_APPLICATION = 'student_management_system.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'educoredb',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+    }
 }
-
-SECRET_KEY = config('l*5p*k(++1@^y988knj@^_^ahopth1)_qqqus9x@jahx(^sryd')
+SECRET_KEY = config('SECRET_KEY')
 
 # Override with PostgreSQL if DATABASE_URL is set (e.g., in production)
-DATABASES['default'].update(dj_database_url.config(default=os.environ.get('DATABASE_URL')))
+
 
 
 # Password validation
