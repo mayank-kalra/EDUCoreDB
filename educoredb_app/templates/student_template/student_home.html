@@ -2,7 +2,48 @@
 {% block page_title %}
 Home
 {% endblock page_title %}
-{% block main_content %}
+{% block main_content %}<style>
+.content .callout {
+    background: #ffffff;
+    border-left: 5px solid #007bff;
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.content .callout h3 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 10px;
+}
+
+.content .callout p {
+    color: #6b7280;
+    font-size: 15px;
+}
+.content { background: #f4f6f9; padding: 20px; }
+.content .callout, .content .card, .content .info-box { border-radius: 14px !important; }
+.content .callout { border-left-width: 5px; padding: 24px; }
+.content .callout h3 { font-size: 24px; font-weight: 700; }
+.content .info-box { min-height: 120px; transition: transform .2s ease, box-shadow .2s ease; }
+.content .info-box:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,.15) !important; }
+.content .card { border: none; overflow: hidden; }
+.content .card-header { padding: 18px 22px; font-weight: 600; }
+.content .card-title { font-size: 18px; font-weight: 600; }
+
+.modern-stat { background:#fff !important; color:#1f2937 !important; border:1px solid #e5e7eb; border-left:5px solid; }
+.modern-stat .info-box-icon { background:transparent !important; color:inherit !important; }
+.modern-stat .info-box-text, .modern-stat .info-box-number, .modern-stat .progress-description { color:#1f2937 !important; }
+.stat-blue { border-left-color:#17a2b8 !important; }
+.stat-blue .info-box-icon { color:#17a2b8 !important; }
+.stat-red { border-left-color:#dc3545 !important; }
+.stat-red .info-box-icon { color:#dc3545 !important; }
+.stat-green { border-left-color:#28a745 !important; }
+.stat-green .info-box-icon { color:#28a745 !important; }
+.stat-yellow { border-left-color:#ffc107 !important; }
+.stat-yellow .info-box-icon { color:#d39e00 !important; }
+.modern-stat.stat-blue { background:#007bff !important; color:#fff !important; border-left-color:#0056b3 !important; }.modern-stat.stat-blue .info-box-icon,.modern-stat.stat-blue .info-box-text,.modern-stat.stat-blue .info-box-number,.modern-stat.stat-blue .progress-description { color:#fff !important; }.modern-stat.stat-green { background:#28a745 !important; color:#fff !important; border-left-color:#1e7e34 !important; }.modern-stat.stat-green .info-box-icon,.modern-stat.stat-green .info-box-text,.modern-stat.stat-green .info-box-number,.modern-stat.stat-green .progress-description { color:#fff !important; }</style>
     <section class="content">
       <div class="container-fluid">
         <div class="row mb-3">
@@ -15,7 +56,7 @@ Home
                 </div>
                 <div class="mt-3 mt-md-0">
                   <a href="{% url 'student_view_attendance' %}" class="btn btn-outline-primary rounded-pill mr-2">Attendance Details</a>
-                  <a href="#" class="btn btn-primary rounded-pill>View Profile</a>
+                  <a href="#" class="btn btn-primary rounded-pill">View Profile</a>
                 </div>
               </div>
             </div>
@@ -46,7 +87,7 @@ Home
 
         <div class="row">
           <div class="col-lg-3 col-md-6 mb-3">
-            <div class="info-box bg-gradient-info shadow-lg rounded-lg">
+            <div class="info-box modern-stat stat-blue shadow-lg rounded-lg">
               <span class="info-box-icon"><i class="fas fa-chart-line"></i></span>
               <div class="info-box-content">
                 <span class="info-box-text">Total Attendance</span>
@@ -66,7 +107,7 @@ Home
             </div>
           </div>
           <div class="col-lg-3 col-md-6 mb-3">
-            <div class="info-box bg-success shadow-lg rounded-lg">
+            <div class="info-box modern-stat stat-green shadow-lg rounded-lg">
               <span class="info-box-icon"><i class="fas fa-user-check"></i></span>
               <div class="info-box-content">
                 <span class="info-box-text">Present</span>
@@ -94,7 +135,7 @@ Home
                 <h3 class="card-title">Attendance Breakdown</h3>
               </div>
               <div class="card-body">
-                <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                {% if total_attendance > 0 %}<canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>{% else %}<div class="text-center text-muted py-5"><i class="fas fa-chart-pie fa-3x mb-3"></i><p class="mb-0">No attendance data yet</p></div>{% endif %}
               </div>
             </div>
           </div>
@@ -160,18 +201,15 @@ Home
                     },
                   ]
                 }
-            var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-            var pieOptions     = {
-              maintainAspectRatio : false,
-              responsive : true,
-            }
+            {% if total_attendance > 0 %}
+            var pieChartCanvas = $(`#pieChart`).get(0).getContext(`2d`);
+            var pieOptions = { maintainAspectRatio: false, responsive: true };
             var pieChart = new Chart(pieChartCanvas, {
-              type: 'pie',
+              type: `pie`,
               data: pieData,
               options: pieOptions
             });
-            var barChartCanvas = $('#barChart').get(0).getContext('2d')
-            var barChartData = jQuery.extend(true, {}, areaChartData)
+            {% endif %}
             var temp1 = areaChartData.datasets[0]
             barChartData.datasets[0] = temp1
             var barChartOptions = {
