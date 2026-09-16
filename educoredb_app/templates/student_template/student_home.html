@@ -43,6 +43,10 @@ Home
 .stat-green .info-box-icon { color:#28a745 !important; }
 .stat-yellow { border-left-color:#ffc107 !important; }
 .stat-yellow .info-box-icon { color:#d39e00 !important; }
+.content .callout .btn-primary {
+    color: #fff !important;
+    text-decoration: none !important;
+}
 .modern-stat.stat-blue { background:#007bff !important; color:#fff !important; border-left-color:#0056b3 !important; }.modern-stat.stat-blue .info-box-icon,.modern-stat.stat-blue .info-box-text,.modern-stat.stat-blue .info-box-number,.modern-stat.stat-blue .progress-description { color:#fff !important; }.modern-stat.stat-green { background:#28a745 !important; color:#fff !important; border-left-color:#1e7e34 !important; }.modern-stat.stat-green .info-box-icon,.modern-stat.stat-green .info-box-text,.modern-stat.stat-green .info-box-number,.modern-stat.stat-green .progress-description { color:#fff !important; }</style>
     <section class="content">
       <div class="container-fluid">
@@ -66,15 +70,15 @@ Home
         {% if class_room %}
         <div class="row">
           <div class="col-12">
-            <div class="card card-outline card-success shadow-lg mb-4">
+            <div class="card card-outline card-success shadow-lg mb-4 rounded-lg">
               <div class="card-header border-0">
                 <h3 class="card-title">Live Classroom Access</h3>
               </div>
               <div class="card-body">
-                <p class="text-muted mb-3">Join your scheduled sessions directly from the dashboard.</p>
+                <p class="text-muted mb-3">Quickly join your scheduled live classes from your dashboard.</p>
                 <div class="d-flex flex-wrap">
                   {% for class_single in class_room %}
-                  <a href="/join_class_room/{{ class_single.subject.id }}/{{ class_single.session_years.id }}" class="btn btn-success m-1">
+                  <a href="/join_class_room/{{ class_single.subject.id }}/{{ class_single.session_years.id }}" class="btn btn-success rounded-pill m-1 px-4">
                     <i class="fas fa-door-open mr-1"></i> Join {{ class_single.subject.subject_name }}
                   </a>
                   {% endfor %}
@@ -134,7 +138,7 @@ Home
               <div class="card-header border-0">
                 <h3 class="card-title">Attendance Breakdown</h3>
               </div>
-              <div class="card-body">
+              <div class="card-body p-4">
                 {% if total_attendance > 0 %}<canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>{% else %}<div class="text-center text-muted py-5"><i class="fas fa-chart-pie fa-3x mb-3"></i><p class="mb-0">No attendance data yet</p></div>{% endif %}
               </div>
             </div>
